@@ -43,7 +43,10 @@ import held_hou
 phi,PHIw,PHIs,PHI1,PHI0,  \
     theta_m1,theta_e,theta_m,  \
       vert_sc,mer_w_sc,mer_s_sc,  \
-        conv,message=held_hou.off(heating=4)
+        conv,message=held_hou.off(heating=5)
+
+print('the value for phi0 is, ',PHI0)
+print('the value for phi1 is',PHI1)
 
 
 # flag for if solution hasn't converged so print warning message
@@ -93,52 +96,49 @@ ax.text(-10,mub+.2*delmu, r'$v_s$ $\sim$ '+"{0:.2g}".format(mer_s_sc)+' $ms^{-1}
 
 plt.show()
 
-# we want to generate an array of values for the heating position between 0
-# and 20 degrees
-# this is the array of heating positions
-heating=np.linspace(1,20,20)
-
-# initialize the arrays for the output
-phi=np.zeros(len(heating))
-PHIw=np.zeros(len(heating))
-PHIs=np.zeros(len(heating))
-PHI1=np.zeros(len(heating))
-PHI0=np.zeros(len(heating))
-theta_m1=np.zeros(len(heating))
-theta_e=np.zeros(len(heating))
-theta_m=np.zeros(len(heating))
-vert_sc=np.zeros(len(heating))
-mer_w_sc=np.zeros(len(heating))
-mer_s_sc=np.zeros(len(heating))
-
-# initialize the array for the convergence flag
-conv=np.zeros(len(heating),dtype=bool)
-# initializse the array for the message
-message=np.zeros(len(heating),dtype='S100')
-
-# loop through the heating positions
-for i in range(len(heating)):
-    # run the model
-    phi[i],PHIw[i],PHIs[i],PHI1[i],PHI0[i],  \
-        theta_m1[i],theta_e[i],theta_m[i],  \
-          vert_sc[i],mer_w_sc[i],mer_s_sc[i],  \
-            conv[i],message[i]=held_hou.off(heating=heating[i])
-
-    # flag for if solution hasn't converged so print warning message
-    if conv[i] != True:
-        print(message[i])
-
-# plot the results
-fig=plt.figure(figsize=(10,5))
-ax=fig.add_subplot(1,1,1)
-ax.plot(heating,PHIw,'k',label=r'$\phi_w$')
-ax.plot(heating,PHIs,'k--',label=r'$\phi_s$')
-ax.plot(heating,PHI1,'g--',label=r'$\phi_1$')
-ax.plot(heating,PHI0,'b:',label=r'$\phi_0$')
-ax.set_xlabel('Heating position / $^\circ$')
-ax.set_ylabel('Latitude / $^\circ$')
-ax.legend()
-plt.show()
+# # we want to generate an array of values for the heating position between 0
+# # and 20 degrees
+# # this is the array of heating positions
+# heating=np.linspace(1,20,20)
+#
+# # initialize the arrays for the output
+# phi=np.zeros(len(heating))
+# PHIw=np.zeros(len(heating))
+# PHIs=np.zeros(len(heating))
+# PHI1=np.zeros(len(heating))
+# PHI0=np.zeros(len(heating))
+# theta_m1=np.zeros(len(heating))
+# theta_e=np.zeros(len(heating))
+# theta_m=np.zeros(len(heating))
+# vert_sc=np.zeros(len(heating))
+# mer_w_sc=np.zeros(len(heating))
+# mer_s_sc=np.zeros(len(heating))
+#
+# # initialize the array for the convergence flag
+# conv=np.zeros(len(heating),dtype=bool)
+# # initializse the array for the message
+# message=np.zeros(len(heating),dtype='S100')
+#
+# # loop through the heating positions
+# for i in range(len(heating)):
+#     # run the model
+#     phi[i],PHIw[i],PHIs[i],PHI1[i],PHI0[i],theta_m1[i],theta_e[i],theta_m[i],vert_sc[i],mer_w_sc[i],mer_s_sc[i],conv[i],message[i]=held_hou.off(heating=heating[i])
+#
+#     # flag for if solution hasn't converged so print warning message
+#     #if conv[i] != True:
+#     #    print(message[i])
+#
+# # plot the results
+# fig=plt.figure(figsize=(10,5))
+# ax=fig.add_subplot(1,1,1)
+# ax.plot(heating,PHIw,'k',label=r'$\phi_w$')
+# ax.plot(heating,PHIs,'k--',label=r'$\phi_s$')
+# ax.plot(heating,PHI1,'g--',label=r'$\phi_1$')
+# ax.plot(heating,PHI0,'b:',label=r'$\phi_0$')
+# ax.set_xlabel('Heating position / $^\circ$')
+# ax.set_ylabel('Latitude / $^\circ$')
+# ax.legend()
+# plt.show()
 
 
 # ACP says to explore boundary conditions (min max solar heating)
@@ -148,5 +148,58 @@ plt.show()
 # e.g. you woudn't get a phi0 of 70 degrees up in the midlatitudes
 # what happens if you change the values of the constants? - sort of
 # sensitivity analysis
+
+# perform a simple test by running the function with 10 values for heating
+# position and then plotting the results
+# this is the array of heating positions
+heating=np.linspace(0,6.5,50) # 8.59 degrees = 0.15 radians
+
+# initialize the arrays for the output, each should have 2 dimensions
+# one for the delta_theta = 50 and one for the delta_theta = 98
+# phi is an array of the latitude of the heating position with size (801,10)
+phi=np.zeros((801,len(heating)))
+PHIw=np.zeros(len(heating))
+PHIs=np.zeros(len(heating))
+PHI1=np.zeros(len(heating))
+PHI0=np.zeros(len(heating))
+theta_m1=np.zeros(len(heating))
+# theta m and theta e are arrays with size (801,10)
+theta_e=np.zeros((801,len(heating)))
+theta_m=np.zeros((801,len(heating)))
+vert_sc=np.zeros(len(heating))
+mer_w_sc=np.zeros(len(heating))
+mer_s_sc=np.zeros(len(heating))
+
+# initialize a list for the boolean conv flag
+conv=np.zeros(len(heating),dtype=bool)
+# initialize a list for the message
+message=np.zeros(len(heating),dtype='str')
+
+
+# loop through the heating positions
+for i in range(len(heating)):
+    # initialize the output
+    output=held_hou.off(heating=heating[i],delta_theta=50)
+    # unpack the output
+    phi[:,i],PHIw[i],PHIs[i],PHI1[i],PHI0[i],theta_m1[i],theta_e[:,i],theta_m[:,i],vert_sc[i],mer_w_sc[i],mer_s_sc[i],conv[i],message[i]=output
+
+
+    # flag for if solution hasn't converged so print warning message
+    if conv[i] != True:
+        print(message[i])
+
+# plot the results
+fig=plt.figure(figsize=(10,5))
+ax=fig.add_subplot(1,1,1)
+ax.plot(heating,PHIw*-1,'b',label=r'$\phi_w$')
+ax.plot(heating,PHIs,'r',label=r'$\phi_s$')
+ax.plot(heating,PHI1,'k',label=r'$\phi_1$')
+ax.set_xlabel('Heating position (degrees)')
+ax.set_ylabel('Latitude (degrees)')
+ax.legend()
+plt.show()
+
+
+
 #%%
 

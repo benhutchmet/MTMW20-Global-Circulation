@@ -88,7 +88,8 @@ def dry(H=10000, a=6370E3, omega=7.292E-5, delta_theta=50,   \
 ####################################
 
 
-def off(heating=6,Yw_fac=-1.2,Ys_fac=1.2,Y1_fac=1.2,delthe_fac=1.2): 
+def off(heating=6,Yw_fac=-1.2,Ys_fac=1.2,Y1_fac=1.2,delthe_fac=1.2,
+        delta_theta=50):
 
  """
  This function iteratively solves the off equatorial version of the Held-Hou model
@@ -281,8 +282,7 @@ def moist(width=0.3, H=10000, a=6370E3, omega=7.292E-5, delta_theta=50,   \
 
 # find width of heating in degrees
  zc=np.ravel(np.where((theta_estar(y[0:len(y)-1],amp) > theta_m(y[0:len(y)-1]))  \
-        & (theta_estar(y[1:len(y)],amp) < theta_m(y[1:len(y)])))) 
-
+        & (theta_estar(y[1:len(y)],amp) < theta_m(y[1:len(y)]))))
  PHIw=np.degrees(np.arcsin(y[zc[1]]/a))
 
 # equilibrium potential temperature at equator is equal to amplitude
@@ -301,3 +301,7 @@ def moist(width=0.3, H=10000, a=6370E3, omega=7.292E-5, delta_theta=50,   \
 ##################  
  
 
+
+#%%
+
+#%%
