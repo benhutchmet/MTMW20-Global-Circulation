@@ -120,7 +120,7 @@ def off(heating=6,Yw_fac=-1.2,Ys_fac=1.2,Y1_fac=1.2,delthe_fac=1.2,
  H=15000 
  a=6370.E3 
  omega=7.292E-5 
- delta_theta=50.
+ delta_theta=delta_theta
  theta_0=300 
  g=9.81 
  tau=10*86400 

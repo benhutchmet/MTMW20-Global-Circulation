@@ -96,50 +96,6 @@ ax.text(-10,mub+.2*delmu, r'$v_s$ $\sim$ '+"{0:.2g}".format(mer_s_sc)+' $ms^{-1}
 
 plt.show()
 
-# # we want to generate an array of values for the heating position between 0
-# # and 20 degrees
-# # this is the array of heating positions
-# heating=np.linspace(1,20,20)
-#
-# # initialize the arrays for the output
-# phi=np.zeros(len(heating))
-# PHIw=np.zeros(len(heating))
-# PHIs=np.zeros(len(heating))
-# PHI1=np.zeros(len(heating))
-# PHI0=np.zeros(len(heating))
-# theta_m1=np.zeros(len(heating))
-# theta_e=np.zeros(len(heating))
-# theta_m=np.zeros(len(heating))
-# vert_sc=np.zeros(len(heating))
-# mer_w_sc=np.zeros(len(heating))
-# mer_s_sc=np.zeros(len(heating))
-#
-# # initialize the array for the convergence flag
-# conv=np.zeros(len(heating),dtype=bool)
-# # initializse the array for the message
-# message=np.zeros(len(heating),dtype='S100')
-#
-# # loop through the heating positions
-# for i in range(len(heating)):
-#     # run the model
-#     phi[i],PHIw[i],PHIs[i],PHI1[i],PHI0[i],theta_m1[i],theta_e[i],theta_m[i],vert_sc[i],mer_w_sc[i],mer_s_sc[i],conv[i],message[i]=held_hou.off(heating=heating[i])
-#
-#     # flag for if solution hasn't converged so print warning message
-#     #if conv[i] != True:
-#     #    print(message[i])
-#
-# # plot the results
-# fig=plt.figure(figsize=(10,5))
-# ax=fig.add_subplot(1,1,1)
-# ax.plot(heating,PHIw,'k',label=r'$\phi_w$')
-# ax.plot(heating,PHIs,'k--',label=r'$\phi_s$')
-# ax.plot(heating,PHI1,'g--',label=r'$\phi_1$')
-# ax.plot(heating,PHI0,'b:',label=r'$\phi_0$')
-# ax.set_xlabel('Heating position / $^\circ$')
-# ax.set_ylabel('Latitude / $^\circ$')
-# ax.legend()
-# plt.show()
-
 
 # ACP says to explore boundary conditions (min max solar heating)
 # and the position of the global deserts (would this change?)
@@ -175,6 +131,20 @@ conv=np.zeros(len(heating),dtype=bool)
 # initialize a list for the message
 message=np.zeros(len(heating),dtype='str')
 
+# initialize a second set of arrays for the delta_theta = 98 runs
+phi98=np.zeros((801,len(heating)))
+PHIw98=np.zeros(len(heating))
+PHIs98=np.zeros(len(heating))
+PHI198=np.zeros(len(heating))
+PHI098=np.zeros(len(heating))
+theta_m198=np.zeros(len(heating))
+theta_e98=np.zeros((801,len(heating)))
+theta_m98=np.zeros((801,len(heating)))
+vert_sc98=np.zeros(len(heating))
+mer_w_sc98=np.zeros(len(heating))
+mer_s_sc98=np.zeros(len(heating))
+conv98=np.zeros(len(heating),dtype=bool)
+message98=np.zeros(len(heating),dtype='str')
 
 # loop through the heating positions
 for i in range(len(heating)):
@@ -188,12 +158,27 @@ for i in range(len(heating)):
     if conv[i] != True:
         print(message[i])
 
+# loop through the 98 heating positions
+for i in range(len(heating)):
+    # initialize the output
+    output98=held_hou.off(heating=heating[i],delta_theta=98)
+    # unpack the output
+    phi98[:,i],PHIw98[i],PHIs98[i],PHI198[i],PHI098[i],theta_m198[i],theta_e98[:,i],theta_m98[:,i],vert_sc98[i],mer_w_sc98[i],mer_s_sc98[i],conv98[i],message98[i]=output98
+
+    # flag for if solution hasn't converged so print warning message
+    if conv98[i] != True:
+        print(message98[i])
+
 # plot the results
 fig=plt.figure(figsize=(10,5))
 ax=fig.add_subplot(1,1,1)
-ax.plot(heating,PHIw*-1,'b',label=r'$\phi_w$')
-ax.plot(heating,PHIs,'r',label=r'$\phi_s$')
-ax.plot(heating,PHI1,'k',label=r'$\phi_1$')
+ax.plot(heating,PHIw*-1,'b',label=r'$\phi_w$ $\delta_\theta=1/3$')
+ax.plot(heating,PHIs,'r',label=r'$\phi_s$ $\delta_\theta=1/3$')
+ax.plot(heating,PHI1,'k',label=r'$\phi_1$ $\delta_\theta=1/3$')
+# now plot the 98 delta_theta results
+ax.plot(heating,PHIw98*-1,'b--',label=r'$\phi_w$ $\delta_\theta=1/6$')
+ax.plot(heating,PHIs98,'r--',label=r'$\phi_s$ $\delta_\theta=1/6$')
+ax.plot(heating,PHI198,'k--',label=r'$\phi_1$ $\delta_\theta=1/6$')
 ax.set_xlabel('Heating position (degrees)')
 ax.set_ylabel('Latitude (degrees)')
 ax.legend()
