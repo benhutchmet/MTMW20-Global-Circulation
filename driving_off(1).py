@@ -43,7 +43,7 @@ import held_hou
 phi,PHIw,PHIs,PHI1,PHI0,  \
     theta_m1,theta_e,theta_m,  \
       vert_sc,mer_w_sc,mer_s_sc,  \
-        conv,message=held_hou.off(heating=5)
+        conv,message=held_hou.off(heating=4)
 
 print('the value for phi0 is, ',PHI0)
 print('the value for phi1 is',PHI1)
@@ -96,6 +96,8 @@ ax.text(-10,mub+.2*delmu, r'$v_s$ $\sim$ '+"{0:.2g}".format(mer_s_sc)+' $ms^{-1}
 
 plt.show()
 
+# save the figure
+fig.savefig('off_equatorial_ACP.png',dpi=300)
 
 # ACP says to explore boundary conditions (min max solar heating)
 # and the position of the global deserts (would this change?)
@@ -179,12 +181,13 @@ ax.plot(heating,PHI1,'k',label=r'$\phi_1$ $\delta_\theta=1/3$')
 ax.plot(heating,PHIw98*-1,'b--',label=r'$\phi_w$ $\delta_\theta=1/6$')
 ax.plot(heating,PHIs98,'r--',label=r'$\phi_s$ $\delta_\theta=1/6$')
 ax.plot(heating,PHI198,'k--',label=r'$\phi_1$ $\delta_\theta=1/6$')
-ax.set_xlabel('Heating position (degrees)')
+ax.set_xlabel('$\phi_0$ (degrees)')
 ax.set_ylabel('Latitude (degrees)')
 ax.legend()
 plt.show()
 
-
+# save the figure
+fig.savefig('heating_position_lindzen_hou_fig4.png')
 
 #%%
 
