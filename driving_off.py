@@ -40,64 +40,64 @@ import held_hou
 
 # this shows you how to run the Held-Hou off equatorial function
 # this line is all you need to run the model
-phi,PHIw,PHIs,PHI1,PHI0,  \
-    theta_m1,theta_e,theta_m,  \
-      vert_sc,mer_w_sc,mer_s_sc,  \
-        conv,message=held_hou.off(heating=4)
+# phi,PHIw,PHIs,PHI1,PHI0,  \
+#     theta_m1,theta_e,theta_m,  \
+#       vert_sc,mer_w_sc,mer_s_sc,  \
+#         conv,message=held_hou.off(heating=4)
+#
+# print('the value for phi0 is, ',PHI0)
+# print('the value for phi1 is',PHI1)
+#
+#
+# # flag for if solution hasn't converged so print warning message
+# if conv != True:
+#     print(message)
+#
+# ##########
+#
+# # This is an example of how you can plot this data
+# # make plot and add numbers for velocity scales etc.
+# # get value at edge for scaling axis and then add another 20 points
+# edge_ind=np.argmin(np.abs(phi-PHIw))-40
+# if edge_ind < 0: edge_ind=0
+#
+# # plotting steps
+# fig=plt.figure(figsize=(10,5))
+# # theta values
+# ax=fig.add_subplot(1,1,1)
+# ax.plot(phi,theta_m,'k')
+# ax.plot(phi,theta_e,'k--')
+#
+# # calculated values
+# mub=theta_e[edge_ind]
+# mut=np.max(theta_e)
+# delmu=mut-mub
+#
+# # options
+# ax.set_xlim([-40,40])
+# ax.set_ylim([theta_e[edge_ind],np.max(theta_e)+2.5])
+# ax.set_ylabel("Potential temperature / K")
+# ax.set_xlabel('Latitude')
+#
+# # plot lines to show max heating and position of cells
+# ax.plot([PHI0,PHI0],[theta_e[edge_ind],np.max(theta_e)+2.5],'b:')
+# ax.text(PHI0-1,mub+.45*delmu, r'$\phi_0$ $\sim$ '+"{0:.2g}".format(PHI0)+'$^\circ$',ha='right',color='b')
+# ax.plot([PHI1,PHI1],[theta_e[edge_ind],np.max(theta_e)+2.5],'g--')
+# ax.text(PHI1+1,mub+.45*delmu, r'$\phi_1$ $\sim$ '+"{0:.2g}".format(PHI1)+'$^\circ$',ha='left',color='g')
+#
+# # print cell edges
+# ax.text(-25,mub+.1*delmu,r'$\phi_w$ $\sim$ '+"{0:.2f}".format(PHIw)+'$^\circ$',ha='center')
+# ax.text(-25,mub+.15*delmu, r'$\phi_s$ $\sim$ '+"{0:.2g}".format(PHIs)+'$^\circ$',ha='center')
+#
+# # print velocity scale
+# ax.text(-10,mub+.1*delmu,r'$w$ $\sim$ '+"{0:.2g}".format(vert_sc)+' $ms^{-1}$',ha='center')
+# ax.text(-10,mub+.15*delmu, r'$v_w$ $\sim$ '+"{0:.2g}".format(mer_w_sc)+' $ms^{-1}$',ha='center')
+# ax.text(-10,mub+.2*delmu, r'$v_s$ $\sim$ '+"{0:.2g}".format(mer_s_sc)+' $ms^{-1}$',ha='center')
 
-print('the value for phi0 is, ',PHI0)
-print('the value for phi1 is',PHI1)
-
-
-# flag for if solution hasn't converged so print warning message
-if conv != True:
-    print(message)
-
-##########
-
-# This is an example of how you can plot this data
-# make plot and add numbers for velocity scales etc.
-# get value at edge for scaling axis and then add another 20 points
-edge_ind=np.argmin(np.abs(phi-PHIw))-40
-if edge_ind < 0: edge_ind=0
-
-# plotting steps
-fig=plt.figure(figsize=(10,5))
-# theta values
-ax=fig.add_subplot(1,1,1)
-ax.plot(phi,theta_m,'k')
-ax.plot(phi,theta_e,'k--')
-
-# calculated values
-mub=theta_e[edge_ind]
-mut=np.max(theta_e)
-delmu=mut-mub
-
-# options
-ax.set_xlim([-40,40])
-ax.set_ylim([theta_e[edge_ind],np.max(theta_e)+2.5])
-ax.set_ylabel("Potential temperature / K")
-ax.set_xlabel('Latitude')
-
-# plot lines to show max heating and position of cells
-ax.plot([PHI0,PHI0],[theta_e[edge_ind],np.max(theta_e)+2.5],'b:')
-ax.text(PHI0-1,mub+.45*delmu, r'$\phi_0$ $\sim$ '+"{0:.2g}".format(PHI0)+'$^\circ$',ha='right',color='b')
-ax.plot([PHI1,PHI1],[theta_e[edge_ind],np.max(theta_e)+2.5],'g--')
-ax.text(PHI1+1,mub+.45*delmu, r'$\phi_1$ $\sim$ '+"{0:.2g}".format(PHI1)+'$^\circ$',ha='left',color='g')
-
-# print cell edges
-ax.text(-25,mub+.1*delmu,r'$\phi_w$ $\sim$ '+"{0:.2f}".format(PHIw)+'$^\circ$',ha='center')
-ax.text(-25,mub+.15*delmu, r'$\phi_s$ $\sim$ '+"{0:.2g}".format(PHIs)+'$^\circ$',ha='center')
-
-# print velocity scale
-ax.text(-10,mub+.1*delmu,r'$w$ $\sim$ '+"{0:.2g}".format(vert_sc)+' $ms^{-1}$',ha='center')
-ax.text(-10,mub+.15*delmu, r'$v_w$ $\sim$ '+"{0:.2g}".format(mer_w_sc)+' $ms^{-1}$',ha='center')
-ax.text(-10,mub+.2*delmu, r'$v_s$ $\sim$ '+"{0:.2g}".format(mer_s_sc)+' $ms^{-1}$',ha='center')
-
-plt.show()
+#plt.show()
 
 # save the figure
-fig.savefig('off_equatorial_ACP.png',dpi=300)
+#fig.savefig('off_equatorial_ACP.png',dpi=300)
 
 # ACP says to explore boundary conditions (min max solar heating)
 # and the position of the global deserts (would this change?)
@@ -110,7 +110,7 @@ fig.savefig('off_equatorial_ACP.png',dpi=300)
 # perform a simple test by running the function with 10 values for heating
 # position and then plotting the results
 # this is the array of heating positions
-heating=np.linspace(0,6.5,50) # 8.59 degrees = 0.15 radians
+heating=np.linspace(0,6,50) # 8.59 degrees = 0.15 radians
 
 # initialize the arrays for the output, each should have 2 dimensions
 # one for the delta_theta = 50 and one for the delta_theta = 98
@@ -151,7 +151,7 @@ message98=np.zeros(len(heating),dtype='str')
 # loop through the heating positions
 for i in range(len(heating)):
     # initialize the output
-    output=held_hou.off(heating=heating[i],delta_theta=50)
+    output=held_hou.off(heating=heating[i],delta_theta=48,theta_0=300)
     # unpack the output
     phi[:,i],PHIw[i],PHIs[i],PHI1[i],PHI0[i],theta_m1[i],theta_e[:,i],theta_m[:,i],vert_sc[i],mer_w_sc[i],mer_s_sc[i],conv[i],message[i]=output
 
@@ -163,7 +163,7 @@ for i in range(len(heating)):
 # loop through the 98 heating positions
 for i in range(len(heating)):
     # initialize the output
-    output98=held_hou.off(heating=heating[i],delta_theta=98)
+    output98=held_hou.off(heating=heating[i],delta_theta=97,theta_0=300)
     # unpack the output
     phi98[:,i],PHIw98[i],PHIs98[i],PHI198[i],PHI098[i],theta_m198[i],theta_e98[:,i],theta_m98[:,i],vert_sc98[i],mer_w_sc98[i],mer_s_sc98[i],conv98[i],message98[i]=output98
 
@@ -181,6 +181,8 @@ ax.plot(heating,PHI1,'k',label=r'$\phi_1$ $\delta_\theta=1/3$')
 ax.plot(heating,PHIw98*-1,'b--',label=r'$\phi_w$ $\delta_\theta=1/6$')
 ax.plot(heating,PHIs98,'r--',label=r'$\phi_s$ $\delta_\theta=1/6$')
 ax.plot(heating,PHI198,'k--',label=r'$\phi_1$ $\delta_\theta=1/6$')
+# text containing the value of theta_0
+ax.text(5.4,0,r'$\theta_0=$'+str(300)+'K',fontsize=14)
 ax.set_xlabel('$\phi_0$ (degrees)')
 ax.set_ylabel('Latitude (degrees)')
 ax.legend()

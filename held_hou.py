@@ -89,14 +89,23 @@ def dry(H=10000, a=6370E3, omega=7.292E-5, delta_theta=50,   \
 
 
 def off(heating=6,Yw_fac=-1.2,Ys_fac=1.2,Y1_fac=1.2,delthe_fac=1.2,
-        delta_theta=50):
+        delta_theta=50,theta_0=300):
 
  """
  This function iteratively solves the off equatorial version of the Held-Hou model
  The standard Earth values (as above) are used as constants here
 
  The single optional value used is the position of off-equatorial heating in degrees (other optional
- values used above are tuning constants for the optimization
+ values used above are tuning constants for the optimization.
+
+ Inputs are:
+ Heating - position of off-equatorial heating (degrees)
+ Yw_fac - tuning constant for Yw
+ Ys_fac - tuning constant for Ys
+ Y1_fac - tuning constant for Y1
+ delthe_fac - tuning constant for delthe
+ delta_theta - difference in temp, equator to pole (K)
+ theta_0 - base temperature at mid-point (K)
 
  outputs are latitude, edge of winter cell, edge of summer cell, mid-point of
  cells (position of max upwelling), theta_m1 (the constant for the theta_m
@@ -117,15 +126,15 @@ def off(heating=6,Yw_fac=-1.2,Ys_fac=1.2,Y1_fac=1.2,delthe_fac=1.2,
  
 
 # use standard Earth values as constants but can be changed
- H=15000 
- a=6370.E3 
- omega=7.292E-5 
- delta_theta=delta_theta
- theta_0=300 
- g=9.81 
- tau=10*86400 
- delta_thetav=30
- delta_h=1./6.
+ H=15000 # scale height (m)
+ a=6370.E3 # radius of planet (m)
+ omega=7.292E-5 # rotation rate of planet (s-1)
+ delta_theta=delta_theta # difference in temp, equator to pole (K)
+ theta_0=theta_0 # base temperature at mid-point (K)
+ g=9.81 # acceleration due to gravity (ms-2)
+ tau=10*86400 # time scale for vertical velocity (s)
+ delta_thetav=30 # temperature difference between layers (K)
+ delta_h=1./6. # thickness of layers (m)
 
 # independent variable phi 
  y=np.arange(-4000,4010,10)*1E3
