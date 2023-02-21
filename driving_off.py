@@ -181,15 +181,13 @@ ax.plot(heating,PHI1,'k',label=r'$\phi_1$ $\delta_\theta=1/3$')
 ax.plot(heating,PHIw98*-1,'b--',label=r'$\phi_w$ $\delta_\theta=1/6$')
 ax.plot(heating,PHIs98,'r--',label=r'$\phi_s$ $\delta_\theta=1/6$')
 ax.plot(heating,PHI198,'k--',label=r'$\phi_1$ $\delta_\theta=1/6$')
-# text containing the value of theta_0
-ax.text(5.4,0,r'$\theta_0=$'+str(300)+'K',fontsize=14)
 ax.set_xlabel('$\phi_0$ (degrees)')
 ax.set_ylabel('Latitude (degrees)')
-ax.legend()
+ax.legend(loc='upper left')
 plt.show()
 
 # save the figure
-fig.savefig('heating_position_lindzen_hou_fig4.png')
+#fig.savefig('heating_position_lindzen_hou_fig4'.png')
 
 #%%
 
