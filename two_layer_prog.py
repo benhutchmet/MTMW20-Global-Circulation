@@ -153,7 +153,7 @@ def solve(ndays=200, tau=40, R=10, K1=5E5):
        
 # if on a whole number day store  
     if t in step_store:
-        d=np.int(t/steps_per_day)
+        d=int(t/steps_per_day)
         u_st[:,:,d]=np.vstack((u1,u2)).transpose()
         q_st[:,:,d]=np.vstack((q1,q2)).transpose()
         eta_st[:,d]=eta

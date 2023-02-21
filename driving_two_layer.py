@@ -90,6 +90,9 @@ for l in range(2):
   plt.colorbar()
   plt.title('PV Flux (scaled f$_{0}$)')  
   plt.yticks([-45,-25,0,25,45])
- 
+
+  plt.show()
   plt.tight_layout() 
   plt.savefig('two_layer_evolution_'+str(l+1)+'.png')
+
+  
